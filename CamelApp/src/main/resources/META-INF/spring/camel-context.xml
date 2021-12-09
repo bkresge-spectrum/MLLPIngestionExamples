@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring https://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       ">
+
+    <!-- enable Spring @Component scan -->
+    <context:component-scan base-package="hl7Integration.camel.routes.in"/>
+
+    <bean id="properties" class="org.apache.camel.component.properties.PropertiesComponent">
+        <property name="location" value="classpath:hl7integration/configuration/endpoint.properties"/>
+    </bean>
+    
+    <bean id="respondACK" class="hl7Integration.camel.RespondACK"/>
+
+    <bean id="hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
+        <property name="charset" value="iso-8859-1"/>
+    </bean>
+
+    <camelContext xmlns="http://camel.apache.org/schema/spring" id="camelContext">
+
+        <contextScan/>
+        <!-- You need to configure your socket in the endpoint.properties file  -->
+        <camel:endpoint id="hl7listener" uri="mina:tcp://{{endpoint.server}}:{{endpoint.port}}?sync=true&amp;codec=#hl7codec" />
+       
+
+    </camelContext>
+
+</beans>

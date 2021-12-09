@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>CamelApp</groupId>
+  <artifactId>CamelApp</artifactId>
+  <version>1.4</version>
+
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <camel.version>3.11.0</camel.version>
+    <hapi.version.stable>2.3</hapi.version.stable>
+    <env.spring.version>5.3.8</env.spring.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core</artifactId>
+      <version>${camel.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-spring</artifactId>
+		<version>${camel.version}</version>
+	</dependency>
+	<dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring-main</artifactId>
+      <version>${camel.version}</version>
+	</dependency>
+	<dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring-xml</artifactId>
+      <version>${camel.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-mina</artifactId>
+		<version>${camel.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.camel.springboot</groupId>
+	  <artifactId>camel-mina-starter</artifactId>
+	  <version>${camel.version}</version>
+	  <!-- use the same version as your Camel core version -->
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-hl7</artifactId>
+		<version>${camel.version}</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.camel.springboot</groupId>
+	  <artifactId>camel-hl7-starter</artifactId>
+	  <version>${camel.version}</version>
+	  <!-- use the same version as your Camel core version -->
+	</dependency>
+	<dependency>
+		<groupId>org.apache.camel</groupId>
+		<artifactId>camel-support</artifactId>
+		<version>${camel.version}</version>
+	</dependency>	
+    <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-test</artifactId>
+        <version>${camel.version}</version>
+        <scope>test</scope>
+    </dependency>
+	<dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.11</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-jetty</artifactId>
+    	<version>2.5.3</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.camel.springboot</groupId>
+    	<artifactId>camel-spring-boot-starter</artifactId>
+    	<version>${camel.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.camel.springboot</groupId>
+    	<artifactId>camel-rest-starter</artifactId>
+    	<version>${camel.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.apache.camel</groupId>
+    	<artifactId>camel-jetty</artifactId>
+    	<version>${camel.version}</version>
+    </dependency>
+	<!-- HAPI -->
+    <dependency>
+        <groupId>ca.uhn.hapi</groupId>
+        <artifactId>hapi-base</artifactId>
+        <version>${hapi.version.stable}</version>
+    </dependency>
+    <dependency>
+        <groupId>ca.uhn.hapi</groupId>
+        <artifactId>hapi-structures-v25</artifactId>
+        <version>${hapi.version.stable}</version>
+    </dependency>
+	<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>2.5.3</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+  	<defaultGoal>install</defaultGoal>
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+      <plugins>
+        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+              <source>1.8</source>
+              <target>1.8</target>
+          </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-maven-plugin</artifactId>
+            <version>${camel.version}</version>                
+            <configuration>
+            	<fileApplicationContextUri>
+            	src/main/resources/META-INF/spring/camel-context.xml
+            	</fileApplicationContextUri>
+            </configuration>
+        </plugin>
+        <plugin>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-maven-plugin</artifactId>
+        	<version>2.5.3</version>
+        	<configuration>
+        		<mainClass>hl7Integration.camle.CamelApp</mainClass>
+        	</configuration>
+    	</plugin>
+      </plugins>
+  </build>
+</project>

@@ -1,0 +1,14 @@
+{
+  "name": "nodejs-mllp",
+  "version": "1.0.0",
+  "description": "NodeJS MLLP Server Barebones",
+  "main": "server.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Brian Kresge",
+  "license": "ISC",
+  "dependencies": {
+    "mllp-node": "^2.0.0"
+  }
+}
